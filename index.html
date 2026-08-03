@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>好康到家 · 杨存工作台</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">好康</div>
+      <div><b>杨存工作台</b><span>好康到家 · 上门私教</span></div>
+    </div>
+    <nav class="nav">
+      <button data-v="today" class="on"><span class="ico">🏠</span>今日看板</button>
+      <button data-v="scripts"><span class="ico">🎙</span>口播文案库</button>
+      <button data-v="checker"><span class="ico">🛡</span>违禁词雷达</button>
+      <button data-v="plan"><span class="ico">🗺</span>起号作战地图</button>
+      <button data-v="hot"><span class="ico">🔥</span>热点二创雷达</button>
+      <button data-v="review"><span class="ico">📊</span>内容复盘诊断</button>
+      <button data-v="sop"><span class="ico">📘</span>双平台 SOP</button>
+    </nav>
+    <div class="side-foot">
+      数据保存在本机浏览器，换设备请先导出备份。<br><br>
+      <button class="btn sm" id="btnExport" style="width:100%">导出备份</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ============ 今日看板 ============ -->
+    <section class="view on" id="v-today">
+      <div class="head">
+        <div>
+          <h1>今日看板</h1>
+          <p>每天开工先看这一屏：今天拍什么、做什么、蹭什么热点。</p>
+        </div>
+        <div class="head-r">
+          <label style="font-size:12px;color:var(--tx3)">起号起始日</label>
+          <input type="date" id="startDate" style="border:1px solid var(--line);border-radius:9px;padding:6px 10px;background:#fff">
+        </div>
+      </div>
+
+      <div class="grid g4" id="kpis"></div>
+
+      <div class="sec-t"><h2>🎙 今日口播文案（15 秒）</h2><span class="hint">按起号天数自动轮换，可直接照着念</span></div>
+      <div id="todayScript"></div>
+
+      <div class="grid g2" style="margin-top:14px">
+        <div class="card" id="todayRhythm"></div>
+        <div class="card">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:6px">🔥 今天可以蹭的热点</div>
+          <div id="todayHot"></div>
+        </div>
+      </div>
+
+      <div class="sec-t"><h2>✅ 当前阶段待办</h2><span class="hint">勾选后自动同步到作战地图</span></div>
+      <div class="card" id="todayTasks"></div>
+    </section>
+
+    <!-- ============ 文案库 ============ -->
+    <section class="view" id="v-scripts">
+      <div class="head">
+        <div>
+          <h1>15 秒口播文案库</h1>
+          <p>30 天双线内容：少儿体态 15 条 + 产后恢复 15 条，全部已过违禁词自检，字数控制在 15 秒语速内。</p>
+        </div>
+        <div class="head-r"><span class="tag t-gray" id="scStat"></span></div>
+      </div>
+      <div class="pill-row">
+        <button class="pill on" data-f="all">全部 30 条</button>
+        <button class="pill" data-f="kid">少儿体态</button>
+        <button class="pill" data-f="mom">产后恢复</button>
+        <button class="pill" data-f="todo">未发布</button>
+      </div>
+      <div class="note b" style="margin-bottom:14px">
+        <b>使用方式：</b>口播直接念正文即可；发抖音时把「拍摄」栏当分镜提示；「合规」栏是这条文案的红线提醒，改写时别踩回去。同一条文案改成图文正文，就能直接发小红书。
+      </div>
+      <div class="grid g2" id="scGrid"></div>
+    </section>
+
+    <!-- ============ 违禁词 ============ -->
+    <section class="view" id="v-checker">
+      <div class="head">
+        <div>
+          <h1>违禁词雷达</h1>
+          <p>2026 年抖音已从关键词匹配升级为语义识别，医疗健康类是零容忍重点。发布前必过一遍。</p>
+        </div>
+        <div class="head-r">
+          <button class="btn sm" id="btnFromToday">载入今日文案</button>
+          <button class="btn sm" id="btnClear">清空</button>
+          <button class="btn sm p" id="btnPurify">一键净化</button>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:7px">① 粘贴你的口播 / 标题 / 字幕</div>
+          <textarea class="ta" id="chkInput" placeholder="把要发的文案粘进来，右侧会实时标红…"></textarea>
+          <div class="note" style="margin-top:11px">
+            <b>别忘了检查这些地方：</b>视频字幕、封面文字、标题、置顶评论、私信自动回复、主页简介 —— 抖音的 OCR 和 ASR 全都会扫。
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+            <div style="font-size:12px;color:var(--tx3)">② 检测结果</div>
+            <div class="meta" id="chkSum" style="display:flex;gap:5px"></div>
+          </div>
+          <div class="hl" id="chkOut"></div>
+          <div style="font-size:12px;color:var(--tx3);margin:13px 0 3px">③ 替换建议</div>
+          <div id="chkList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 作战地图 ============ -->
+    <section class="view" id="v-plan">
+      <div class="head">
+        <div>
+          <h1>0 → 1 起号作战地图</h1>
+          <p>90 天四个阶段，按"能不能被算法认出你 → 跑出结构 → 放量筛精准 → 转成订单"的顺序推进。</p>
+        </div>
+        <div class="head-r"><span class="tag t-brand" id="planStat"></span></div>
+      </div>
+      <div id="planWrap"></div>
+      <div class="note" style="margin-top:14px">
+        <b>推进原则：</b>阶段可以重叠，但不要跳级。没跑出至少 1 条 5 万播放之前，不要急着上团购和直播 —— 没有流量的转化动作只会消耗账号权重。
+      </div>
+    </section>
+
+    <!-- ============ 热点 ============ -->
+    <section class="view" id="v-hot">
+      <div class="head">
+        <div>
+          <h1>热点二创雷达</h1>
+          <p>只收录跟少儿体态 / 产后恢复相关、你能直接改编的热点，附二创角度和踩雷提醒。</p>
+        </div>
+        <div class="head-r">
+          <span class="tag t-gray" id="hotTime"></span>
+          <button class="btn sm" id="hotAdd">+ 手动添加</button>
+        </div>
+      </div>
+      <div class="note b" style="margin-bottom:14px">
+        <b>更新方式：</b>已配置每日自动任务，会在每天早上把新的热点写入 <code>assets/daily.js</code>，打开工作台就是最新的。自己刷到好选题，也可以点右上角手动加进来。
+      </div>
+      <div class="grid g2" id="hotGrid"></div>
+    </section>
+
+    <!-- ============ 复盘 ============ -->
+    <section class="view" id="v-review">
+      <div class="head">
+        <div>
+          <h1>内容复盘诊断</h1>
+          <p>填完数据自动定位瓶颈在哪一环，并给出下一条具体怎么改。一次只改一个变量。</p>
+        </div>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px">录入一条作品数据</div>
+          <form id="rvForm">
+            <div class="grid g2" style="gap:10px">
+              <div class="f"><label>发布日期</label><input name="date" type="date"></div>
+              <div class="f"><label>平台</label><select name="plat"><option>抖音</option><option>小红书</option></select></div>
+            </div>
+            <div class="f" style="margin-top:10px"><label>标题 / 选题</label><input name="title" placeholder="例：书包背出来的高低肩"></div>
+            <div class="grid g3" style="gap:10px;margin-top:10px">
+              <div class="f"><label>播放量</label><input name="play" type="number" placeholder="0"></div>
+              <div class="f"><label>3 秒留存 %</label><input name="hook" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>完播率 %</label><input name="finish" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>点赞</label><input name="like" type="number" placeholder="0"></div>
+              <div class="f"><label>评论</label><input name="comment" type="number" placeholder="0"></div>
+              <div class="f"><label>收藏</label><input name="collect" type="number" placeholder="0"></div>
+              <div class="f"><label>新增粉丝</label><input name="fans" type="number" placeholder="0"></div>
+              <div class="f"><label>咨询线索</label><input name="msg" type="number" placeholder="0"></div>
+              <div class="f" style="justify-content:flex-end"><button class="btn p" type="submit" style="width:100%">生成诊断</button></div>
+            </div>
+          </form>
+          <div class="note" style="margin-top:12px">
+            数据在抖音创作者中心「作品数据」里看；小红书在「笔记数据分析」。3 秒留存找不到就填首图跳出率的反数。
+          </div>
+        </div>
+        <div class="card" id="rvDiag"><div class="empty">左侧填完数据，这里会给出逐项诊断和下次的具体改法。</div></div>
+      </div>
+      <div class="sec-t"><h2>历史记录</h2><span class="hint">连续记录 7 条以上，规律就出来了</span></div>
+      <div class="card" id="rvList"></div>
+    </section>
+
+    <!-- ============ SOP ============ -->
+    <section class="view" id="v-sop">
+      <div class="head">
+        <div>
+          <h1>双平台 SOP 与词库</h1>
+          <p>抖音和小红书不是同一套打法，同一个选题要用两种方式表达。</p>
+        </div>
+      </div>
+      <div class="sec-t"><h2>抖音 vs 小红书 差异对照</h2></div>
+      <div class="card" id="sopTable"></div>
+      <div class="sec-t"><h2>每周固定节奏</h2><span class="hint">把运营变成流水线，别靠灵感</span></div>
+      <div class="card" id="weekTable"></div>
+      <div class="sec-t"><h2>完整违禁词库</h2><span class="hint">按赛道定制，每月对照平台公告更新一次</span></div>
+      <div class="card" id="banTable"></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/daily.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
