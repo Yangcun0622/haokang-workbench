@@ -180,7 +180,9 @@
               <div class="f"><label>分享 / 转发</label><input name="share" type="number" placeholder="0"></div>
               <div class="f"><label>平均观看时长 秒</label><input name="avg" type="number" step="0.1" placeholder="0"></div>
               <div class="f"><label>主页访问量</label><input name="home" type="number" placeholder="0"></div>
-              <div class="f"><label>粉丝播放占比 %</label><input name="fanp" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>2 秒跳出率 %</label><input name="exit2" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>5 秒完播率 %</label><input name="finish5" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>平均播放占比 %（粉丝播放占比）</label><input name="fanp" type="number" step="0.1" placeholder="0"></div>
               <div class="f" style="justify-content:flex-end"><button class="btn p" type="submit" style="width:100%">生成诊断</button></div>
             </div>
           </form>
@@ -190,12 +192,14 @@
               <tr><td>播放量</td><td>基础数据</td><td>起号期单条 ≥5000 进下一流量池</td></tr>
               <tr><td>3 秒播放率</td><td>留存分析</td><td>≥60% 优 / ≥45% 中</td></tr>
               <tr><td>完播率</td><td>留存分析</td><td>≥45% 优 / ≥30% 中</td></tr>
-              <tr><td>平均观看时长</td><td>留存分析</td><td>越长越好，≥视频时长 50%</td></tr>
+              <tr><td>2 秒跳出率</td><td>留存分析</td><td>越低越好，≤40% 优 / ≤60% 中</td></tr>
+              <tr><td>5 秒完播率</td><td>留存分析</td><td>≥60% 优 / ≥40% 中</td></tr>
+              <tr><td>平均观看时长</td><td>留存分析</td><td>越长越好，≥视频时长 50%（口播 20—30s 时 ≥12s 优）</td></tr>
               <tr><td>点赞 / 评论 / 收藏</td><td>互动数据</td><td>赞率≥3% / 评率≥0.5% / 藏率≥1.5%</td></tr>
               <tr><td>分享（转发）</td><td>互动数据</td><td>≥0.8% 即破圈信号</td></tr>
               <tr><td>新增粉丝</td><td>粉丝数据</td><td>涨粉率 ≥1%</td></tr>
               <tr><td>主页访问量</td><td>来源分析</td><td>主页访问率 ≥5% 人设吸引强</td></tr>
-              <tr><td>粉丝播放占比</td><td>观众分析</td><td>偏低=触达新人群，偏高=粉丝盘稳</td></tr>
+              <tr><td>平均播放占比（粉丝播放占比）</td><td>观众分析</td><td>越低=新客触达强、易破圈（≤30% 优 / ≤50% 中）</td></tr>
             </tbody></table></div>
             <div style="margin-top:8px">小红书对应在「笔记数据分析」；3 秒留存找不到就填首图跳出率的反数。以上数值为行业经验参考，以你账号实际数据为准。</div>
           </div>
