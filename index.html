@@ -174,11 +174,30 @@
               <div class="f"><label>收藏</label><input name="collect" type="number" placeholder="0"></div>
               <div class="f"><label>新增粉丝</label><input name="fans" type="number" placeholder="0"></div>
               <div class="f"><label>咨询线索</label><input name="msg" type="number" placeholder="0"></div>
+            </div>
+            <div style="font-size:12px;color:var(--tx3);margin:14px 0 6px">抖音作品数据核心指标（创作者中心「作品数据」→ 单条作品分析 里都有）</div>
+            <div class="grid g3" style="gap:10px">
+              <div class="f"><label>分享 / 转发</label><input name="share" type="number" placeholder="0"></div>
+              <div class="f"><label>平均观看时长 秒</label><input name="avg" type="number" step="0.1" placeholder="0"></div>
+              <div class="f"><label>主页访问量</label><input name="home" type="number" placeholder="0"></div>
+              <div class="f"><label>粉丝播放占比 %</label><input name="fanp" type="number" step="0.1" placeholder="0"></div>
               <div class="f" style="justify-content:flex-end"><button class="btn p" type="submit" style="width:100%">生成诊断</button></div>
             </div>
           </form>
           <div class="note" style="margin-top:12px">
-            数据在抖音创作者中心「作品数据」里看；小红书在「笔记数据分析」。3 秒留存找不到就填首图跳出率的反数。
+            <b>抖音作品数据看板对照（权威指标，去创作者中心「作品数据」核对）</b>
+            <div class="tw" style="margin-top:8px"><table><thead><tr><th>指标</th><th>后台位置</th><th>及格参考</th></tr></thead><tbody>
+              <tr><td>播放量</td><td>基础数据</td><td>起号期单条 ≥5000 进下一流量池</td></tr>
+              <tr><td>3 秒播放率</td><td>留存分析</td><td>≥60% 优 / ≥45% 中</td></tr>
+              <tr><td>完播率</td><td>留存分析</td><td>≥45% 优 / ≥30% 中</td></tr>
+              <tr><td>平均观看时长</td><td>留存分析</td><td>越长越好，≥视频时长 50%</td></tr>
+              <tr><td>点赞 / 评论 / 收藏</td><td>互动数据</td><td>赞率≥3% / 评率≥0.5% / 藏率≥1.5%</td></tr>
+              <tr><td>分享（转发）</td><td>互动数据</td><td>≥0.8% 即破圈信号</td></tr>
+              <tr><td>新增粉丝</td><td>粉丝数据</td><td>涨粉率 ≥1%</td></tr>
+              <tr><td>主页访问量</td><td>来源分析</td><td>主页访问率 ≥5% 人设吸引强</td></tr>
+              <tr><td>粉丝播放占比</td><td>观众分析</td><td>偏低=触达新人群，偏高=粉丝盘稳</td></tr>
+            </tbody></table></div>
+            <div style="margin-top:8px">小红书对应在「笔记数据分析」；3 秒留存找不到就填首图跳出率的反数。以上数值为行业经验参考，以你账号实际数据为准。</div>
           </div>
         </div>
         <div class="card" id="rvDiag"><div class="empty">左侧填完数据，这里会给出逐项诊断和下次的具体改法。</div></div>
