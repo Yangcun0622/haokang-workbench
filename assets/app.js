@@ -254,8 +254,10 @@ function diagnose(d){
     const raw = r.get(d);
     if(raw === null) return;            // 字段未填（兼容旧记录），跳过该规则
     const v = +raw || 0;
-    if(!d.play && r.k!=='hook' && r.k!=='finish') return;
-    const lv = v >= r.good ? 'ok' : (v >= r.mid ? 'warn' : 'bad');
+    if(!d.play && !['hook','finish','avg','exit2','finish5','fanp'].includes(r.k)) return;
+    const lv = r.dir==='down'
+      ? (v <= r.good ? 'ok' : (v <= r.mid ? 'warn' : 'bad'))
+      : (v >= r.good ? 'ok' : (v >= r.mid ? 'warn' : 'bad'));
     out.push({lv, name:r.name, v: v.toFixed(r.unit?2:1)+(r.unit||'%'),
       msg: lv==='ok' ? '表现达标，这一环节可以保持。' : r.badMsg,
       fix: lv==='ok' ? '' : r.fix});
@@ -268,11 +270,12 @@ function diagnose(d){
 function renderReviewList(){
   const rv = DB.d.reviews;
   $('#rvList').innerHTML = rv.length ? '<div class="tw"><table><thead><tr>'+
-    ['日期','平台','标题','播放','3秒','完播','赞','评','藏','分享','粉','主页','时长','粉占','线索',''].map(h=>'<th>'+h+'</th>').join('')+
+    ['日期','平台','标题','播放','3秒','完播','2秒','5秒','赞','评','藏','分享','粉','主页','时长','粉占','线索',''].map(h=>'<th>'+h+'</th>').join('')+
     '</tr></thead><tbody>'+rv.map((r,i)=>'<tr>'+
       '<td>'+esc(r.date)+'</td><td><span class="tag '+(r.plat==='抖音'?'t-gray':'t-mom')+'">'+esc(r.plat)+'</span></td>'+
       '<td style="max-width:230px">'+esc(r.title)+'</td>'+
       '<td>'+r.play+'</td><td>'+r.hook+'%</td><td>'+r.finish+'%</td>'+
+      '<td>'+(r.exit2==null?'-':r.exit2+'%')+'</td><td>'+(r.finish5==null?'-':r.finish5+'%')+'</td>'+
       '<td>'+r.like+'</td><td>'+r.comment+'</td><td>'+r.collect+'</td><td>'+(r.share??'-')+'</td>'+
       '<td>'+r.fans+'</td><td>'+(r.home??'-')+'</td><td>'+(r.avg==null?'-':r.avg+'s')+'</td><td>'+(r.fanp==null?'-':r.fanp+'%')+'</td>'+
       '<td>'+r.msg+'</td>'+
@@ -341,7 +344,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
     const rec = {date:g('date')||todayStr(), plat:g('plat'), title:g('title')||'未命名',
       play:+g('play')||0, hook:+g('hook')||0, finish:+g('finish')||0, like:+g('like')||0,
       comment:+g('comment')||0, collect:+g('collect')||0, fans:+g('fans')||0, msg:+g('msg')||0,
-      share:+g('share')||0, avg:+g('avg')||0, home:+g('home')||0, fanp:+g('fanp')||0};
+      share: g('share')==='' ? null : (+g('share')||0),
+      avg:   g('avg')===''   ? null : (+g('avg')||0),
+      home:  g('home')===''  ? null : (+g('home')||0),
+      fanp:  g('fanp')===''  ? null : (+g('fanp')||0),
+      exit2: g('exit2')==='' ? null : (+g('exit2')||0),
+      finish5: g('finish5')==='' ? null : (+g('finish5')||0)};
     DB.d.reviews.unshift(rec); DB.save();
     f.reset(); f.date.value = todayStr();
     renderReviewList(); renderToday(); showDiag(rec); toast('已生成诊断建议');
